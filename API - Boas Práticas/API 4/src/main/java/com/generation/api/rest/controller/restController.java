@@ -1,4 +1,4 @@
-package com.generation.apiRest.controller;
+package com.generation.api.rest.controller;
 
 import java.util.List;
 
@@ -15,36 +15,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.generation.apiRest.model.Postagem;
-import com.generation.apiRest.repository.PostagemRepository;
+import com.generation.api.rest.model.restModel;
+import com.generation.api.rest.repository.restRepository;
+import com.generation.api.rest.model.restModel;
 
 @RestController
 @RequestMapping("/postagens")
 @CrossOrigin("*")
-public class PostagemController {
+public class restController {
 
 	@Autowired
-	private PostagemRepository repository;
+	private restRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Postagem>> GetAll(){
+	public ResponseEntity<List<restModel>> GetAll(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Postagem> GetById(@PathVariable long id){
+	public ResponseEntity<restModel> GetById(@PathVariable long id){
 		return repository.findById(id)
 				.map(resp->ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem) {
+	public ResponseEntity<restModel> post (@RequestBody restModel postagem) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 	
-	@PutMapping
-	public ResponseEntity<Postagem> put (@RequestBody Postagem postagem) {
+	@PutMapping("/{id}")
+	public ResponseEntity<restModel> put (@PathVariable long id, @RequestBody restModel postagem) {
+		postagem.setId(id);
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 	

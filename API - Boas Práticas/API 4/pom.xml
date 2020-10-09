@@ -8,10 +8,10 @@
 		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.generation</groupId>
-	<artifactId>blogPessoal</artifactId>
+	<groupId>com.generation.api</groupId>
+	<artifactId>rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>blogPessoal</name>
+	<name>rest</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
