@@ -1,4 +1,4 @@
-package com.generation.blogPessoal.controller;
+package com.generation.LojaDeGames.controller;
 
 import java.util.List;
 
@@ -15,37 +15,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.generation.blogPessoal.model.Postagem;
-import com.generation.blogPessoal.repository.PostagemRepository;
+import com.generation.LojaDeGames.model.Produto;
+import com.generation.LojaDeGames.repository.ProdutoRepository;
+
 
 @RestController
-@RequestMapping("/postagens")
+@RequestMapping("/produto")
 @CrossOrigin("*")
-public class PostagemController {
+public class ProdutoController {
 
 	@Autowired
-	private PostagemRepository repository;
+	private ProdutoRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Postagem>> findAllPostagem(){
+	public ResponseEntity<List<Produto>> findAllProduto(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Postagem> findByIDPostagem(@PathVariable long id){
+	public ResponseEntity<Produto> findAllIDProduto(@PathVariable long id){
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 		
 	}
 	
+	@GetMapping("/{descricao}")
+	public ResponseEntity<List<Produto>> findByDescricao (@PathVariable String descricao){
+		return ResponseEntity.ok(repository.findByDescricao(descricao));
+	}
+	
 	@PostMapping
-	public ResponseEntity<Postagem> postPostagem (@RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
+	public ResponseEntity<Produto> postProduto (@RequestBody Produto produto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(produto));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Postagem> put (@PathVariable long id, @RequestBody Postagem postagem) {
-		postagem.setId(id);
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
+	public ResponseEntity<Produto> putProduto (@PathVariable long id, @RequestBody Produto produto) {
+		produto.setId(id);
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(produto));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -53,8 +59,6 @@ public class PostagemController {
 		repository.deleteById(id);
 	}
 	
-	@GetMapping("/{titulo}")
-	public ResponseEntity<List<Postagem>> getByTitulo (@PathVariable String titulo){
-		return ResponseEntity.ok(repository.getByTitulo(titulo));
-	}
+
 }
+

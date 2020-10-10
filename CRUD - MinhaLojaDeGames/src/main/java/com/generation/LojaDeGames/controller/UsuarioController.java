@@ -1,4 +1,4 @@
-package com.generation.blogPessoal.controller;
+package com.generation.LojaDeGames.controller;
 
 import java.util.List;
 
@@ -15,37 +15,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.generation.blogPessoal.model.Postagem;
-import com.generation.blogPessoal.repository.PostagemRepository;
+import com.generation.LojaDeGames.model.Usuario;
+import com.generation.LojaDeGames.repository.UsuarioRepository;
+
 
 @RestController
-@RequestMapping("/postagens")
+@RequestMapping("/usuario")
 @CrossOrigin("*")
-public class PostagemController {
+public class UsuarioController {
 
 	@Autowired
-	private PostagemRepository repository;
+	private UsuarioRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Postagem>> findAllPostagem(){
+	public ResponseEntity<List<Usuario>> findAllUsuario(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Postagem> findByIDPostagem(@PathVariable long id){
+	public ResponseEntity<Usuario> findAllIDProduto(@PathVariable long id){
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 		
 	}
 	
 	@PostMapping
-	public ResponseEntity<Postagem> postPostagem (@RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
+	public ResponseEntity<Usuario> postProduto(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Postagem> put (@PathVariable long id, @RequestBody Postagem postagem) {
-		postagem.setId(id);
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
+	public ResponseEntity<Usuario> putProduto (@PathVariable long id, @RequestBody Usuario usuario) {
+		usuario.setId(id);
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(usuario));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -53,8 +54,5 @@ public class PostagemController {
 		repository.deleteById(id);
 	}
 	
-	@GetMapping("/{titulo}")
-	public ResponseEntity<List<Postagem>> getByTitulo (@PathVariable String titulo){
-		return ResponseEntity.ok(repository.getByTitulo(titulo));
-	}
+
 }

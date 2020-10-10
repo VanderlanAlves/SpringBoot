@@ -42,8 +42,9 @@ public class PostagemController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 	
-	@PutMapping
-	public ResponseEntity<Postagem> putPostagem (@RequestBody Postagem postagem) {
+	@PutMapping("/{id}")
+	public ResponseEntity<Postagem> put (@PathVariable long id, @RequestBody Postagem postagem) {
+		postagem.setId(id);
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 	
